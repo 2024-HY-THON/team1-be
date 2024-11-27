@@ -29,7 +29,7 @@ application/json
 200
 401
 
-
+단일 jwt반환
 
 
 
