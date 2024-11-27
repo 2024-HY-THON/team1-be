@@ -1,8 +1,8 @@
-package com.example.hyppp.service;
+package com.example.teamOnebe.service;
 
-import com.example.hyppp.entity.User;
-import com.example.hyppp.dto.UserRegisterDto;
-import com.example.hyppp.repository.UserRepository;
+import com.example.teamOnebe.entity.User;
+import com.example.teamOnebe.dto.UserRegisterDto;
+import com.example.teamOnebe.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;

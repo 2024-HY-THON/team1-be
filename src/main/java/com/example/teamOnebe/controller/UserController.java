@@ -1,8 +1,8 @@
-package com.example.hyppp.controller;
+package com.example.teamOnebe.controller;
 
-import com.example.hyppp.dto.UserRegisterDto;
-import com.example.hyppp.dto.UsernameDto;
-import com.example.hyppp.service.UserService;
+import com.example.teamOnebe.dto.UserRegisterDto;
+import com.example.teamOnebe.dto.UsernameDto;
+import com.example.teamOnebe.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,6 +47,13 @@ public class UserController {
             response.put("message", "Invalid user data");
             return ResponseEntity.badRequest().body(response);
         }
+        if(!userRegisterDto.getPassword().equals(userRegisterDto.getPasswordVerify()))
+        {
+            response.put("status", "error");
+            response.put("message", "Passwords do not match");
+            return ResponseEntity.badRequest().body(response);
+        }
+
         if(!userService.register(userRegisterDto))
         {
             response.put("status", "error");

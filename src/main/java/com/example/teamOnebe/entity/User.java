@@ -1,4 +1,4 @@
-package com.example.hyppp.entity;
+package com.example.teamOnebe.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

@@ -1,4 +1,4 @@
-package com.example.hyppp.dto;
+package com.example.teamOnebe.dto;
 
 import lombok.Data;
 

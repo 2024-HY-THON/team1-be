@@ -1,7 +1,7 @@
-package com.example.hyppp.repository;
+package com.example.teamOnebe.repository;
 
 
-import com.example.hyppp.entity.User;
+import com.example.teamOnebe.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

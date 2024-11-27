@@ -1,6 +1,6 @@
-package com.example.hyppp.SpringSecurity.jwt;
+package com.example.teamOnebe.SpringSecurity.jwt;
 
-import com.example.hyppp.entity.User;
+import com.example.teamOnebe.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

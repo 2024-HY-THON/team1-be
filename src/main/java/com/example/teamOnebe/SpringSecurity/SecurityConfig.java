@@ -1,8 +1,8 @@
-package com.example.hyppp.SpringSecurity;
+package com.example.teamOnebe.SpringSecurity;
 
-import com.example.hyppp.SpringSecurity.jwt.JWTFilter;
-import com.example.hyppp.SpringSecurity.jwt.JWTUtil;
-import com.example.hyppp.SpringSecurity.jwt.LoginFilter;
+import com.example.teamOnebe.SpringSecurity.jwt.JWTFilter;
+import com.example.teamOnebe.SpringSecurity.jwt.JWTUtil;
+import com.example.teamOnebe.SpringSecurity.jwt.LoginFilter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;

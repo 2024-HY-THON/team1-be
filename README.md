@@ -1,13 +1,28 @@
+POST /usernameVerify
+application/json
+    "username"
+200
+409
+
 POST /register
 application/json
-200 성공
-409 존재하는 username
+    "username"
+    "password"
+    "passwordVerify"
+    "name"
+    "email"
 
+200
+409
+400
 
 POST /login
 application/json
 application/x-www-form-urlencoded
-200 성공
+    "username"
+    "password"
+
+200
 401
 
 

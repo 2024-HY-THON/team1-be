@@ -1,4 +1,4 @@
-package com.example.hyppp.SpringSecurity.jwt;
+package com.example.teamOnebe.SpringSecurity.jwt;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

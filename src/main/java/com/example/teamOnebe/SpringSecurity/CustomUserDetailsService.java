@@ -1,8 +1,8 @@
-package com.example.hyppp.SpringSecurity;
+package com.example.teamOnebe.SpringSecurity;
 
-import com.example.hyppp.SpringSecurity.jwt.CustomUserDetails;
-import com.example.hyppp.entity.User;
-import com.example.hyppp.repository.UserRepository;
+import com.example.teamOnebe.SpringSecurity.jwt.CustomUserDetails;
+import com.example.teamOnebe.entity.User;
+import com.example.teamOnebe.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

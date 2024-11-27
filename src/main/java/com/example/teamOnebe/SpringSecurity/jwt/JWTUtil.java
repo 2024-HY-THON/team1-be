@@ -1,4 +1,4 @@
-package com.example.hyppp.SpringSecurity.jwt;
+package com.example.teamOnebe.SpringSecurity.jwt;
 
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Value;
