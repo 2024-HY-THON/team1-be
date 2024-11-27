@@ -69,14 +69,12 @@ public class UserController {
     @GetMapping("/")
     public String hello(Principal principal)
     {
-        if(principal != null) System.out.println(principal.getName());
         return "hello";
     }
 
     @GetMapping("/user")
     public String user(Principal principal)
     {
-        System.out.println(principal.getName()+"uuu");
         return "you are user";
     }
 }
