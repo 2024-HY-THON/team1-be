@@ -1,7 +1,9 @@
 package com.example.teamOnebe.service;
 
+import com.example.teamOnebe.entity.Tree;
 import com.example.teamOnebe.entity.User;
 import com.example.teamOnebe.dto.UserRegisterDto;
+import com.example.teamOnebe.repository.TreeRepository;
 import com.example.teamOnebe.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 @Transactional
 public class UserService {
     private final UserRepository userRepository;
+    private final TreeRepository treeRepository;
     private final PasswordEncoder passwordEncoder;
 
     public boolean register(UserRegisterDto userRegisterDto)
@@ -28,8 +31,13 @@ public class UserService {
                     .name(userRegisterDto.getName())
                     .role("ROLE_USER")
                     .build();
-
         userRepository.save(user);
+
+        Tree tree = Tree.builder()
+                .user(user)
+                .active(true)
+                .build();
+        treeRepository.save(tree);
         return true;
     }
 
