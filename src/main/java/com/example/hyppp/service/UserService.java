@@ -17,17 +17,24 @@ public class UserService {
 
     public boolean register(UserRegisterDto userRegisterDto)
     {
-        if(userRepository.existsByUsername(userRegisterDto.getUsername()))
+        if(usernameVerify(userRegisterDto.getUsername()))
         {
             return false;
         }
         User user = User.builder()
                     .username(userRegisterDto.getUsername())
                     .password(passwordEncoder.encode(userRegisterDto.getPassword()))
+                    .email(userRegisterDto.getEmail())
+                    .name(userRegisterDto.getName())
                     .role("ROLE_USER")
                     .build();
 
         userRepository.save(user);
         return true;
+    }
+
+    public boolean usernameVerify(String username)
+    {
+        return userRepository.existsByUsername(username);
     }
 }
