@@ -7,40 +7,72 @@ src/main/resources/application.properties
 - 이후 서버 실행하면 테이블은 자동으로 생성
   
 ## api
-
+localhost:8080
 ### 아이디중복확인
 POST /usernameVerify  
+```
 application/json
-
-    "username"
+{
+    "username":"wlsbum"
+}
+```
 200
 409
+
+### 이메일 인증(전송)
+POST /mail/send  
+application/json
+```
+{
+    "email":"aaa@aaa.com"
+}
+```
+200
+요청 후 응답 및 메일도착까지 20초 정도 걸림  
+이전 메일 전송이후 3분이 지나지않았다면, 200을 응답하나 추가 메일은 전송하지 않음.  
+400(email값이 없거나 등)
+
+### 이메일 인증(검증)
+POST /mail/verify  
+application/json
+```
+{
+    "email":"aaa@aaa.com",
+    "code" : 1234
+}
+```
+200 인증성공  
+400(인증번호 틀렸거나 등)
 
 ### 회원가입
 POST /register  
 application/json
-
-    "username"
-    "password"
-    "passwordVerify"
-    "name"
-    "email"
-
-200
-409
-400  
+```
+{
+    "username": "아이디",
+    "password": "pw",
+    "passwordVerify": "pw"
+    "name": "이름(별명)"
+    "email": "aaa@aaa.com"
+}
+```
+200  
+409 이미 있는 아이디(한번 더 체크함)
+400
 
 ### 로그인
 POST /login  
 application/x-www-form-urlencoded
 또는
 application/json
-
-    "username"
-    "password"
-
-200
-401  
+```
+{
+    "username":"아이디",
+    "password":"pw"
+}
+```
+200  
+401   
 단일 jwt반환
 
 
@@ -51,7 +83,7 @@ GET /tree/info
 응답예시
 ```
 {
-"exp": 0
+    "exp": 0
 }
 ```
 
@@ -106,6 +138,7 @@ GET /emotions
 ```
 []
 ```
+
 
 ## 개발예정  
 ### 이름변경  

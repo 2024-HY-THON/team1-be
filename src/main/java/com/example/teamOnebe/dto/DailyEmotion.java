@@ -8,6 +8,4 @@ import lombok.Data;
 public class DailyEmotion {
     private int day;
     private String emotion;
-
-
 }

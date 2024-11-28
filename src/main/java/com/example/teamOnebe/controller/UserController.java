@@ -1,7 +1,10 @@
 package com.example.teamOnebe.controller;
 
+import com.example.teamOnebe.dto.EmailDto;
+import com.example.teamOnebe.dto.EmailVerificationDto;
 import com.example.teamOnebe.dto.UserRegisterDto;
 import com.example.teamOnebe.dto.UsernameDto;
+import com.example.teamOnebe.service.EmailService;
 import com.example.teamOnebe.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,6 +25,7 @@ import java.util.Map;
 public class UserController {
 
     private final UserService userService;
+    private final EmailService emailService;
 
     @PostMapping("/usernameVerify")
     public ResponseEntity<String> usernameVerify(@RequestBody UsernameDto usernameDto)
@@ -66,15 +70,30 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/")
-    public String hello(Principal principal)
+    @PostMapping("/mail/send")
+    public ResponseEntity<String> sendVerification(@RequestBody EmailDto emailDto)
     {
-        return "hello";
+        if(emailDto == null || emailDto.getEmail() == null)
+        {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid data");
+        }
+        emailService.sendEmail(emailDto.getEmail());
+
+        return ResponseEntity.status(HttpStatus.OK).body("email sent");
     }
 
-    @GetMapping("/user")
-    public String user(Principal principal)
+    @PostMapping("/mail/verify")
+    public ResponseEntity<String> verificationCheck(@RequestBody EmailVerificationDto emailVerificationDto)
     {
-        return "you are user";
+        if(emailVerificationDto == null || emailVerificationDto.getEmail() == null || emailVerificationDto.getCode() == null)
+        {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid data");
+        }
+        if(emailService.verify(emailVerificationDto))
+        {
+            return ResponseEntity.status(HttpStatus.OK).body("verification success");
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("verification failed"); //잘못된 인증번호인경우
     }
+
 }
