@@ -48,7 +48,7 @@ public class SecurityConfig { //로그인시 폼데이터형식으로. 나머지
 
         http
                 .authorizeHttpRequests((authorizeRequests)-> authorizeRequests
-                        .requestMatchers("/login", "/", "/register", "/usernameVerify").permitAll()
+                        .requestMatchers("/login", "/", "/register", "/usernameVerify", "/mail/*").permitAll()
                         .anyRequest().authenticated());
 
         http

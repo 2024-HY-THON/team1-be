@@ -60,15 +60,10 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         String username = customUserDetails.getUsername();
         String role = "ROLE_USER";
 
-        //권한이 여러개라면 아래 코드 고려
-//        Collection<? extends GrantedAuthority> authorities = authResult.getAuthorities();
-//        Iterator<? extends GrantedAuthority> iterator = authorities.iterator();
-//        GrantedAuthority authority = iterator.next();
-//        String role = authority.getAuthority();
-
         String token = jwtUtil.generateJwt(username,role,1000*60*60L); //1시간
 
         //HTTP RFC 7235
+        response.setStatus(HttpServletResponse.SC_OK);
         response.addHeader("Authorization", "Bearer " + token);
     }
 
