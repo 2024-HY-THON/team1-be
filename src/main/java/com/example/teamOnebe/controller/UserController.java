@@ -4,6 +4,8 @@ import com.example.teamOnebe.dto.EmailDto;
 import com.example.teamOnebe.dto.EmailVerificationDto;
 import com.example.teamOnebe.dto.UserRegisterDto;
 import com.example.teamOnebe.dto.UsernameDto;
+import com.example.teamOnebe.entity.User;
+import com.example.teamOnebe.repository.UserRepository;
 import com.example.teamOnebe.service.EmailService;
 import com.example.teamOnebe.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
-
+import java.util.Optional;
 
 
 @RestController
@@ -26,6 +28,7 @@ public class UserController {
 
     private final UserService userService;
     private final EmailService emailService;
+    private final UserRepository userRepository;
 
     @PostMapping("/usernameVerify")
     public ResponseEntity<String> usernameVerify(@RequestBody UsernameDto usernameDto)
@@ -94,6 +97,12 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.OK).body("verification success");
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("verification failed"); //잘못된 인증번호인경우
+    }
+
+    @GetMapping("/username")
+    public ResponseEntity<String> getUserName(Principal principal) {
+        return ResponseEntity.ok(userService.getName(principal.getName()));
+
     }
 
 }
