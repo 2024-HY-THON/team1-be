@@ -6,8 +6,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public interface DiaryRepository extends JpaRepository<Diary, Long> {
 
     List<Diary> findByUserAndCreatedDateBetweenOrderByCreatedDate(User user, LocalDate startDate, LocalDate endDate);
+
+    boolean existsByUserAndCreatedDate(User user, LocalDate date);
+
+    Optional<Diary> findByUserAndCreatedDate(User user, LocalDate date);
 }

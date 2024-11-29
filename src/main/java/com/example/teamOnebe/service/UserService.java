@@ -52,7 +52,7 @@ public class UserService {
         if (user == null || !passwordEncoder.matches(oldPassword, user.getPassword()) || newPassword.trim().isEmpty()) {
             return false;
         }
-        user.setPassword(passwordEncoder.encode(newPassword));
+        user.updatePassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
         return true;
     }

@@ -44,10 +44,7 @@ public class User {
     private List<Diary> diary;
 
     // 비밀번호 변경 메서드
-    public void setPassword(String newPassword) {
-        if (newPassword == null || newPassword.trim().isEmpty()) {
-            throw new IllegalArgumentException("Password cannot be null or empty.");
-        }
+    public void updatePassword(String newPassword) {
         this.password = newPassword;
     }
 

@@ -141,6 +141,31 @@ ex. /emotions/2024/11
 []
 ```
 
+### 오늘 일기 작성 여부
+GET /diary/check
+응답예시  
+```
+0 (오늘 작성안했음)
+
+1 (오늘 작성했음)
+```
+
+### 오늘 작성한 일기
+GET /diary/today  
+
+응답예시  
+200
+```
+{
+    "emotion": "good",
+    "type": "happy",
+    "content": "ddd"
+}
+```
+404
+```
+Diary not found
+```
 
 ## 개발예정  
 ### 이름변경  

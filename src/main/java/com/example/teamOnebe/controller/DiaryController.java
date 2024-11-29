@@ -2,10 +2,13 @@ package com.example.teamOnebe.controller;
 
 import com.example.teamOnebe.dto.DailyEmotion;
 import com.example.teamOnebe.dto.DiarySaveDto;
+import com.example.teamOnebe.dto.TodayDiaryDto;
+import com.example.teamOnebe.exception.DiaryNotFoundException;
 import com.example.teamOnebe.service.DiaryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -41,6 +44,26 @@ public class DiaryController {
         } else {
             // emotions가 존재하면 200 OK와 함께 데이터 반환
             return ResponseEntity.ok(emotions);
+        }
+    }
+
+    //오늘 일기 작성여부
+    @GetMapping("/diary/check")
+    public ResponseEntity<?> check(Principal principal)
+    {
+        boolean isWrite = diaryService.isWriteToday(principal.getName());
+        return isWrite ? ResponseEntity.ok(1) : ResponseEntity.ok(0);
+    }
+
+
+    @GetMapping("/diary/today")
+    public ResponseEntity<?> today(Principal principal)
+    {
+        try{
+            TodayDiaryDto diaryDto = diaryService.getTodayDiary(principal.getName());
+            return ResponseEntity.ok(diaryDto);
+        }catch(DiaryNotFoundException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Diary not found");
         }
     }
 
