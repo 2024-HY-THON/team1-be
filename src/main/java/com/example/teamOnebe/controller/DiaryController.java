@@ -6,6 +6,7 @@ import com.example.teamOnebe.service.DiaryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -43,6 +44,19 @@ public class DiaryController {
             return ResponseEntity.ok(emotions);
         }
     }
+
+    //오늘 일기 작성여부
+    @GetMapping("/diary/check")
+    public ResponseEntity<?> check(Principal principal)
+    {
+        try {
+            boolean isWrite = diaryService.isWriteToday(principal.getName());
+            return isWrite ? ResponseEntity.ok(1) : ResponseEntity.ok(0);
+        }catch(UsernameNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+    }
+
 
 //    @GetMapping("/mmm") //createdDate제거하고 해야할듯
 //    public ResponseEntity<?> tmmm(Principal principal)

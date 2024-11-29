@@ -9,6 +9,7 @@ import com.example.teamOnebe.repository.DiaryRepository;
 import com.example.teamOnebe.repository.TreeRepository;
 import com.example.teamOnebe.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -125,5 +126,15 @@ public class DiaryService {
             return emotions;
         }
         return null;
+    }
+
+    public boolean isWriteToday(String username)
+    {
+        Optional<User> _user = userRepository.findByUsername(username);
+        if(_user.isPresent())
+        {
+            return diaryRepository.existsByUserAndCreatedDate(_user.get(), LocalDate.now());
+        }
+        throw new UsernameNotFoundException("없는 유저");
     }
 }

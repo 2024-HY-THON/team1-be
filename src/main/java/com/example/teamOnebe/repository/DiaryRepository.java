@@ -10,4 +10,6 @@ import java.util.List;
 public interface DiaryRepository extends JpaRepository<Diary, Long> {
 
     List<Diary> findByUserAndCreatedDateBetweenOrderByCreatedDate(User user, LocalDate startDate, LocalDate endDate);
+
+    boolean existsByUserAndCreatedDate(User user, LocalDate date);
 }
