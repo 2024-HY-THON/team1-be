@@ -48,11 +48,13 @@ public class UserService {
     }
 
     public UserDetailsDto getUserDetails(String username) {
-        // Fetch the user entity from the database
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
-        // Convert the User entity to a UserDetailsDto and return
-        return new UserDetailsDto(user.getName(), user.getAddress());
+        User user = userRepository.findByUsername(username).get();
+        if(user != null)
+        {
+            return new UserDetailsDto(user.getName(), user.getAddress());
+        }
+        else return null;
+
     }
 }

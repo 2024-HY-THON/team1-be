@@ -93,15 +93,16 @@ public class UserController {
     }
 
     @GetMapping("/user/details")
-    public ResponseEntity<UserDetailsDto> getUserDetails(Principal principal) {
-        // Get the currently logged-in user's username from Principal
+    public ResponseEntity<?> getUserDetails(Principal principal) {
+
         String currentUsername = principal.getName();
 
-        // Fetch user details (name and address) from the service
         UserDetailsDto userDetails = userService.getUserDetails(currentUsername);
+        if(userDetails != null){
+            return ResponseEntity.ok(userDetails);
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("user not found");
 
-        // Return user details as a JSON response
-        return ResponseEntity.ok(userDetails);
     }
 
 }
