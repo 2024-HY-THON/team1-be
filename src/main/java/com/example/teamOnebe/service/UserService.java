@@ -3,12 +3,16 @@ package com.example.teamOnebe.service;
 import com.example.teamOnebe.entity.Tree;
 import com.example.teamOnebe.entity.User;
 import com.example.teamOnebe.dto.UserRegisterDto;
+import com.example.teamOnebe.entity.Wear;
 import com.example.teamOnebe.repository.TreeRepository;
 import com.example.teamOnebe.repository.UserRepository;
+import com.example.teamOnebe.repository.WearRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -16,7 +20,9 @@ import org.springframework.stereotype.Service;
 public class UserService {
     private final UserRepository userRepository;
     private final TreeRepository treeRepository;
+    private final WearRepository wearRepository;
     private final PasswordEncoder passwordEncoder;
+
 
     public boolean register(UserRegisterDto userRegisterDto)
     {
@@ -38,6 +44,12 @@ public class UserService {
                 .active(true)
                 .build();
         treeRepository.save(tree);
+
+        Wear wear = Wear.builder()
+                .user(user)
+                .num(0)
+                .build();
+        wearRepository.save(wear);
         return true;
     }
 
@@ -77,6 +89,12 @@ public class UserService {
         user.updateAddress(newAddress);
         userRepository.save(user);
         return true;
+    }
+
+    public String getName(String username)
+    {
+        Optional<User> _user = userRepository.findByUsername(username);
+        return _user.map(User::getName).orElse(null);
     }
 }
 

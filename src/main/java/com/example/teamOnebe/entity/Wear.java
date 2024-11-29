@@ -21,4 +21,9 @@ public class Wear {
     private User user;
 
     private int num;
+
+    public void updateNum(int num)
+    {
+        this.num = num;
+    }
 }
