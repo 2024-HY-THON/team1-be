@@ -1,5 +1,6 @@
 package com.example.teamOnebe.service;
 
+import com.example.teamOnebe.dto.UserDetailsDto;
 import com.example.teamOnebe.entity.Tree;
 import com.example.teamOnebe.entity.User;
 import com.example.teamOnebe.dto.UserRegisterDto;
@@ -89,6 +90,16 @@ public class UserService {
         user.updateAddress(newAddress);
         userRepository.save(user);
         return true;
+    }
+
+    public UserDetailsDto getUserDetails(String username) {
+
+        User user = userRepository.findByUsername(username).get();
+        if(user != null)
+        {
+            return new UserDetailsDto(user.getName(), user.getAddress());
+        }
+        else return null;
     }
 
     public String getName(String username)

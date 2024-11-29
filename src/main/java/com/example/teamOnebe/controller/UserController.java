@@ -1,9 +1,6 @@
 package com.example.teamOnebe.controller;
 
-import com.example.teamOnebe.dto.EmailDto;
-import com.example.teamOnebe.dto.EmailVerificationDto;
-import com.example.teamOnebe.dto.UserRegisterDto;
-import com.example.teamOnebe.dto.UsernameDto;
+import com.example.teamOnebe.dto.*;
 import com.example.teamOnebe.entity.User;
 import com.example.teamOnebe.repository.UserRepository;
 import com.example.teamOnebe.service.EmailService;
@@ -98,6 +95,20 @@ public class UserController {
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("verification failed"); //잘못된 인증번호인경우
     }
+
+    @GetMapping("/user/details")
+    public ResponseEntity<?> getUserDetails(Principal principal) {
+
+        String currentUsername = principal.getName();
+
+        UserDetailsDto userDetails = userService.getUserDetails(currentUsername);
+        if(userDetails != null){
+            return ResponseEntity.ok(userDetails);
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("user not found");
+
+    }
+
 
     @GetMapping("/username")
     public ResponseEntity<String> getUserName(Principal principal) {
