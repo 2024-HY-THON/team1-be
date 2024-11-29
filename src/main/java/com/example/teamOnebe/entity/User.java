@@ -34,7 +34,7 @@ public class User {
     @Column(nullable = false)
     private String role;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String address;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -52,18 +52,12 @@ public class User {
     }
 
     // 이름 변경 메서드
-    public void setName(String newName) {
-        if (newName == null || newName.trim().isEmpty()) {
-            throw new IllegalArgumentException("Name cannot be null or empty.");
-        }
+    public void updateName(String newName) {
         this.name = newName;
     }
 
     // 주소 변경 메서드
-    public void setAddress(String newAddress) {
-        if (newAddress == null || newAddress.trim().isEmpty()) {
-            throw new IllegalArgumentException("Address cannot be null or empty.");
-        }
+    public void updateAddress(String newAddress) {
         this.address = newAddress;
     }
 }

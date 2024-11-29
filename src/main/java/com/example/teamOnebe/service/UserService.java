@@ -49,7 +49,7 @@ public class UserService {
     public boolean UpdatePassword(String currentUsername, String oldPassword, String newPassword) {
         User user = userRepository.findByUsername(currentUsername)
                 .orElse(null);
-        if (user == null || !passwordEncoder.matches(oldPassword, user.getPassword())) {
+        if (user == null || !passwordEncoder.matches(oldPassword, user.getPassword()) || newPassword.trim().isEmpty()) {
             return false;
         }
         user.setPassword(passwordEncoder.encode(newPassword));
@@ -60,10 +60,10 @@ public class UserService {
     public boolean UpdateName(String currentUsername, String newName) {
         User user = userRepository.findByUsername(currentUsername)
                 .orElse(null);
-        if (user == null) {
+        if (user == null || newName == null || newName.trim().isEmpty()) {
             return false;
         }
-        user.setName(newName);
+        user.updateName(newName);
         userRepository.save(user);
         return true;
     }
@@ -71,10 +71,10 @@ public class UserService {
     public boolean UpdateAddress(String currentUsername, String newAddress) {
         User user = userRepository.findByUsername(currentUsername)
                 .orElse(null);
-        if (user == null) {
+        if (user == null || newAddress == null || newAddress.trim().isEmpty()) {
             return false;
         }
-        user.setAddress(newAddress);
+        user.updateAddress(newAddress);
         userRepository.save(user);
         return true;
     }
