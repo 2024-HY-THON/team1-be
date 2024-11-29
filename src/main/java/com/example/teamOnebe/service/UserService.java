@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -18,6 +20,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final TreeRepository treeRepository;
     private final PasswordEncoder passwordEncoder;
+    private String username;
 
     public boolean register(UserRegisterDto userRegisterDto)
     {
@@ -56,5 +59,9 @@ public class UserService {
         }
         else return null;
 
+    }
+
+    public Optional<User> findUserByUsername(String username) {
+        return userRepository.findByUsername(username);
     }
 }

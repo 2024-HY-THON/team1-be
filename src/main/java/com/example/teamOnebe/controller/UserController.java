@@ -1,6 +1,7 @@
 package com.example.teamOnebe.controller;
 
 import com.example.teamOnebe.dto.*;
+import com.example.teamOnebe.entity.User;
 import com.example.teamOnebe.service.EmailService;
 import com.example.teamOnebe.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 
 @RestController
@@ -105,4 +107,16 @@ public class UserController {
 
     }
 
+    @GetMapping("/username")
+    public ResponseEntity<String> getUserName(Principal principal) {
+        String currentUsername = principal.getName();
+
+        Optional<User> userOptional = userService.findUserByUsername(currentUsername);
+
+        if (userOptional.isPresent()) {
+            return ResponseEntity.ok(userOptional.get().getName());
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+    }
 }
