@@ -175,8 +175,74 @@ GET /wear/{num}
 ex. /wear/3   => 3번장착
 
 
+### 이름변경
+GET/user/details
 
-## 개발예정  
-### 이름변경  
+응답예시
+200
+```
+{
+  "name": "John Doe",
+  "address": "1234 Elm Street, Springfield, IL"
+}
+```
+400
+```
+{
+  "message": "user not found"
+}
+```
+
 ### 비밀번호 변경
+Patch/updatePassword
+로그인된 사용자만 접근 가능
+
+요청 본문 예시
+```
+{
+  "oldPassword": "oldPassword123",
+  "newPassword": "newPassword456"
+}
+```
+
+200
+```
+{
+  "status": "success",
+  "message": "Password updated successfully"
+}
+```
+400
+```
+{
+  "status": "error",
+  "message": "Failed to update password"
+}
+```
+
 ### 주소설정
+Patch/updateAddress
+로그인된 사용자만 접근 가능
+
+요청 본문 예시
+```
+{
+  "newAddress": "서울시 강남구 역삼동 123-45"
+}
+```
+
+200
+```
+{
+  "status": "success",
+  "message": "Address updated successfully"
+}
+```
+
+400
+```
+{
+  "status": "error",
+  "message": "Failed to update address"
+}
+```
