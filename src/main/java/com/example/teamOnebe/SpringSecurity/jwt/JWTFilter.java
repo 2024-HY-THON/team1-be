@@ -1,6 +1,7 @@
 package com.example.teamOnebe.SpringSecurity.jwt;
 
 import com.example.teamOnebe.entity.User;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -33,8 +34,15 @@ public class JWTFilter extends OncePerRequestFilter {
 
         String token = auth.split(" ")[1];
         //만료된 경우
-        if(jwtUtil.isExpired(token))
+        try
         {
+            if (jwtUtil.isExpired(token))
+            {
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); //만료된 경우 401반환
+                response.getWriter().write("Token expired");
+                return;
+            }
+        }catch(ExpiredJwtException e){
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); //만료된 경우 401반환
             response.getWriter().write("Token expired");
             return;
@@ -67,6 +75,6 @@ public class JWTFilter extends OncePerRequestFilter {
         String path = request.getRequestURI();
 
         return path.equals("/login") || path.equals("/") || path.equals("/register") || path.equals("/usernameVerify")
-                || path.equals("/mail/send") || path.equals("/mail/verify"); // 필터를 거치지 않도록 예외처리
+                || path.startsWith("/mail/"); // 필터를 거치지 않도록 예외처리
     }
 }

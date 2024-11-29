@@ -116,8 +116,9 @@ POST /diary/save
 지금은 30개인 경우 저장요청하면 무시됨.
 
 
-### 이번달 emotion리스트
-GET /emotions  
+### 월 별 emotion리스트
+GET /emotions/{year}/{month}
+ex. /emotions/2024/11
 응답예시(날짜순)
 ```
 [

@@ -6,10 +6,7 @@ import com.example.teamOnebe.service.DiaryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
@@ -20,7 +17,7 @@ public class DiaryController {
 
     private final DiaryService diaryService;
 
-    @PostMapping("diary/save")
+    @PostMapping("/diary/save")
     public ResponseEntity<String> save(@RequestBody DiarySaveDto dto, Principal principal)
     {
         if(dto == null || dto.getType() == null || dto.getEmotion() == null)
@@ -34,9 +31,9 @@ public class DiaryController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Tree is full or something went wrong");
     }
 
-    @GetMapping("emotions")
-    public ResponseEntity<?> emotions(Principal principal) {
-        List<DailyEmotion> emotions = diaryService.getEmotions(principal.getName());
+    @GetMapping("/emotions/{year}/{month}")
+    public ResponseEntity<?> emotions(Principal principal, @PathVariable("year") Long year, @PathVariable("month") Long month) {
+        List<DailyEmotion> emotions = diaryService.getEmotionsByYearMonth(principal.getName(), year, month);
 
         if (emotions == null) {
             // emotions가 null => user 없음
@@ -46,4 +43,11 @@ public class DiaryController {
             return ResponseEntity.ok(emotions);
         }
     }
+
+//    @GetMapping("/mmm") //createdDate제거하고 해야할듯
+//    public ResponseEntity<?> tmmm(Principal principal)
+//    {
+//        diaryService.makeTestDiary(principal.getName());
+//        return ResponseEntity.status(HttpStatus.OK).body("Test diary made");
+//    }
 }
