@@ -55,6 +55,17 @@ public class DiaryService {
         return false;
     }
 
+    /**
+     * @return 지정된 년 월 감정목록
+     */
+    public List<DailyEmotion> getEmotionsByYearMonth(String username, Long year, Long month)
+    {
+        Optional<User> _user;
+    }
+
+    /**
+     * @return 이번 달 감정목록
+     */
     public List<DailyEmotion> getEmotions(String username)
     {
         Optional<User> _user = userRepository.findByUsername(username);
