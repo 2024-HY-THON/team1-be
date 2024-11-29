@@ -34,9 +34,14 @@ public class User {
     @Column(nullable = false)
     private String role;
 
+    @Getter
+    @Column(nullable = false)
+    private String address;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Tree> treeList;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Diary> diary;
+
 }

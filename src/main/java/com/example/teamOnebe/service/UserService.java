@@ -1,5 +1,6 @@
 package com.example.teamOnebe.service;
 
+import com.example.teamOnebe.dto.UserDetailsDto;
 import com.example.teamOnebe.entity.Tree;
 import com.example.teamOnebe.entity.User;
 import com.example.teamOnebe.dto.UserRegisterDto;
@@ -44,5 +45,14 @@ public class UserService {
     public boolean usernameVerify(String username)
     {
         return userRepository.existsByUsername(username);
+    }
+
+    public UserDetailsDto getUserDetails(String username) {
+        // Fetch the user entity from the database
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        // Convert the User entity to a UserDetailsDto and return
+        return new UserDetailsDto(user.getName(), user.getAddress());
     }
 }

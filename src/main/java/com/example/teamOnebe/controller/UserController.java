@@ -1,9 +1,6 @@
 package com.example.teamOnebe.controller;
 
-import com.example.teamOnebe.dto.EmailDto;
-import com.example.teamOnebe.dto.EmailVerificationDto;
-import com.example.teamOnebe.dto.UserRegisterDto;
-import com.example.teamOnebe.dto.UsernameDto;
+import com.example.teamOnebe.dto.*;
 import com.example.teamOnebe.service.EmailService;
 import com.example.teamOnebe.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
-
 
 
 @RestController
@@ -94,6 +90,18 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.OK).body("verification success");
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("verification failed"); //잘못된 인증번호인경우
+    }
+
+    @GetMapping("/user/details")
+    public ResponseEntity<UserDetailsDto> getUserDetails(Principal principal) {
+        // Get the currently logged-in user's username from Principal
+        String currentUsername = principal.getName();
+
+        // Fetch user details (name and address) from the service
+        UserDetailsDto userDetails = userService.getUserDetails(currentUsername);
+
+        // Return user details as a JSON response
+        return ResponseEntity.ok(userDetails);
     }
 
 }
