@@ -2,9 +2,11 @@ package com.example.teamOnebe.service;
 
 import com.example.teamOnebe.dto.DailyEmotion;
 import com.example.teamOnebe.dto.DiarySaveDto;
+import com.example.teamOnebe.dto.TodayDiaryDto;
 import com.example.teamOnebe.entity.Diary;
 import com.example.teamOnebe.entity.Tree;
 import com.example.teamOnebe.entity.User;
+import com.example.teamOnebe.exception.DiaryNotFoundException;
 import com.example.teamOnebe.repository.DiaryRepository;
 import com.example.teamOnebe.repository.TreeRepository;
 import com.example.teamOnebe.repository.UserRepository;
@@ -134,6 +136,19 @@ public class DiaryService {
         if(_user.isPresent())
         {
             return diaryRepository.existsByUserAndCreatedDate(_user.get(), LocalDate.now());
+        }
+        throw new UsernameNotFoundException("없는 유저");
+    }
+
+    public TodayDiaryDto getTodayDiary(String username) throws DiaryNotFoundException
+    {
+        Optional<User> _user = userRepository.findByUsername(username);
+        if(_user.isPresent())
+        {
+            Optional<Diary> _diary = diaryRepository.findByUserAndCreatedDate(_user.get(), LocalDate.now());
+            if(_diary.isPresent())
+                return new TodayDiaryDto(_diary.get());
+            else throw new DiaryNotFoundException("오늘 작성한 일기 없음");
         }
         throw new UsernameNotFoundException("없는 유저");
     }

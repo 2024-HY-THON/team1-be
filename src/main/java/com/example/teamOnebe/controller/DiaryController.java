@@ -2,6 +2,8 @@ package com.example.teamOnebe.controller;
 
 import com.example.teamOnebe.dto.DailyEmotion;
 import com.example.teamOnebe.dto.DiarySaveDto;
+import com.example.teamOnebe.dto.TodayDiaryDto;
+import com.example.teamOnebe.exception.DiaryNotFoundException;
 import com.example.teamOnebe.service.DiaryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -49,14 +51,21 @@ public class DiaryController {
     @GetMapping("/diary/check")
     public ResponseEntity<?> check(Principal principal)
     {
-        try {
-            boolean isWrite = diaryService.isWriteToday(principal.getName());
-            return isWrite ? ResponseEntity.ok(1) : ResponseEntity.ok(0);
-        }catch(UsernameNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
-        }
+        boolean isWrite = diaryService.isWriteToday(principal.getName());
+        return isWrite ? ResponseEntity.ok(1) : ResponseEntity.ok(0);
     }
 
+
+    @GetMapping("/diary/today")
+    public ResponseEntity<?> today(Principal principal)
+    {
+        try{
+            TodayDiaryDto diaryDto = diaryService.getTodayDiary(principal.getName());
+            return ResponseEntity.ok(diaryDto);
+        }catch(DiaryNotFoundException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Diary not found");
+        }
+    }
 
 //    @GetMapping("/mmm") //createdDate제거하고 해야할듯
 //    public ResponseEntity<?> tmmm(Principal principal)
