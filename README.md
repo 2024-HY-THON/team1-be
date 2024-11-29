@@ -167,6 +167,12 @@ GET /diary/today
 Diary not found
 ```
 
+### 아이템 장착
+GET /wear/{num}  
+ex. /wear/3   => 3번장착
+
+
+
 ## 개발예정  
 ### 이름변경  
 ### 비밀번호 변경

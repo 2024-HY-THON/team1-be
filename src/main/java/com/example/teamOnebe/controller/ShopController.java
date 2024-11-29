@@ -20,7 +20,11 @@ public class ShopController {
     @GetMapping("/wear/{num}")
     public ResponseEntity<?> wear(@PathVariable int num, Principal principal)
     {
-        int wearNum = shopService.getWearNum(principal.getName());
-        return ResponseEntity.ok(wearNum);
+        if(shopService.updateWear(principal.getName(),num))
+        {
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
 }

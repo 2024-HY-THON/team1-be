@@ -19,10 +19,22 @@ public class ShopService {
     private final UserRepository userRepository;
     private final WearRepository wearRepository;
 
-//    public int updateWear(int num)
-//    {
-//
-//    }
+    public boolean updateWear(String username, int num)
+    {
+        Optional<User> _user = userRepository.findByUsername(username);
+        if(_user.isPresent())
+        {
+            Optional<Wear> _wear = wearRepository.findByUser(_user.get());
+            if(_wear.isPresent())
+            {
+                Wear wear = _wear.get();
+                wear.updateNum(num);
+                wearRepository.save(wear);
+                return true;
+            }
+        }
+        return false;
+    }
 
     public int getWearNum(String username)
     {
