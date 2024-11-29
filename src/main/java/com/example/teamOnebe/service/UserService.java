@@ -45,4 +45,38 @@ public class UserService {
     {
         return userRepository.existsByUsername(username);
     }
+
+    public boolean UpdatePassword(String currentUsername, String oldPassword, String newPassword) {
+        User user = userRepository.findByUsername(currentUsername)
+                .orElse(null);
+        if (user == null || !passwordEncoder.matches(oldPassword, user.getPassword()) || newPassword.trim().isEmpty()) {
+            return false;
+        }
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+        return true;
+    }
+
+    public boolean UpdateName(String currentUsername, String newName) {
+        User user = userRepository.findByUsername(currentUsername)
+                .orElse(null);
+        if (user == null || newName == null || newName.trim().isEmpty()) {
+            return false;
+        }
+        user.updateName(newName);
+        userRepository.save(user);
+        return true;
+    }
+
+    public boolean UpdateAddress(String currentUsername, String newAddress) {
+        User user = userRepository.findByUsername(currentUsername)
+                .orElse(null);
+        if (user == null || newAddress == null || newAddress.trim().isEmpty()) {
+            return false;
+        }
+        user.updateAddress(newAddress);
+        userRepository.save(user);
+        return true;
+    }
 }
+

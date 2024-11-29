@@ -34,11 +34,32 @@ public class User {
     @Column(nullable = false)
     private String role;
 
+    @Column(nullable = true)
+    private String address;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Tree> treeList;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Diary> diary;
+
+    // 비밀번호 변경 메서드
+    public void setPassword(String newPassword) {
+        if (newPassword == null || newPassword.trim().isEmpty()) {
+            throw new IllegalArgumentException("Password cannot be null or empty.");
+        }
+        this.password = newPassword;
+    }
+
+    // 이름 변경 메서드
+    public void updateName(String newName) {
+        this.name = newName;
+    }
+
+    // 주소 변경 메서드
+    public void updateAddress(String newAddress) {
+        this.address = newAddress;
+    }
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Owns> ownsList;
