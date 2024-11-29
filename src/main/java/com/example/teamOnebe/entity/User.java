@@ -34,8 +34,7 @@ public class User {
     @Column(nullable = false)
     private String role;
 
-    @Getter
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String address;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
