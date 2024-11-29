@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +26,25 @@ public class DiaryService {
     private final DiaryRepository diaryRepository;
     private final UserRepository userRepository;
     private final TreeRepository treeRepository;
+
+//    public boolean makeTestDiary(String username)
+//    {
+//        User user = userRepository.findByUsername(username).get();
+//        Tree tree = treeRepository.findByUserAndActiveIsTrue(user).get();
+//
+//        // Diary 데이터 생성
+//        List<Diary> diaries = Arrays.asList(
+//                Diary.builder().user(user).tree(tree).createdDate(LocalDate.of(2024, 10, 1)).emotion("good").type("happy").content("Test content 1").build(),
+//                Diary.builder().user(user).tree(tree).createdDate(LocalDate.of(2024, 10, 2)).emotion("soso").type("worry").content("Test content 2").build(),
+//                Diary.builder().user(user).tree(tree).createdDate(LocalDate.of(2024, 11, 3)).emotion("bad").type("sad").content("Test content 3").build()
+//        );
+//
+//        // 데이터베이스에 저장
+//        diaryRepository.saveAll(diaries);
+//        return true;
+//    }
+
+
 
     public boolean save(DiarySaveDto dto, String username)
     {
@@ -60,7 +80,25 @@ public class DiaryService {
      */
     public List<DailyEmotion> getEmotionsByYearMonth(String username, Long year, Long month)
     {
-        Optional<User> _user;
+        Optional<User> _user = userRepository.findByUsername(username);
+        if(_user.isPresent())
+        {
+            LocalDate startDate = LocalDate.of(year.intValue(), month.intValue(), 1); // 해당 월의 첫째 날
+            LocalDate endDate = startDate.withDayOfMonth(startDate.lengthOfMonth()); // 해당 월의 마지막 날
+
+            User user = _user.get();
+
+            List<Diary> diarys = diaryRepository.findByUserAndCreatedDateBetweenOrderByCreatedDate(user, startDate,  endDate);
+
+            List<DailyEmotion> emotions = new ArrayList<>();
+            for(Diary diary : diarys)
+            {
+                DailyEmotion dailyEmotion = new DailyEmotion(diary.getCreatedDate().getDayOfMonth(), diary.getEmotion());
+                emotions.add(dailyEmotion);
+            }
+            return emotions;
+        }
+        return null;
     }
 
     /**
@@ -71,8 +109,13 @@ public class DiaryService {
         Optional<User> _user = userRepository.findByUsername(username);
         if(_user.isPresent())
         {
+            LocalDate startDate = LocalDate.now().withDayOfMonth(1);
+            LocalDate endDate = LocalDate.now();
+
             User user = _user.get();
-            List<Diary> diarys = diaryRepository.findByUserAndCreatedDateBetweenOrderByCreatedDate(user,LocalDate.now().withDayOfMonth(1), LocalDate.now());
+
+            List<Diary> diarys = diaryRepository.findByUserAndCreatedDateBetweenOrderByCreatedDate(user, startDate, endDate);
+
             List<DailyEmotion> emotions = new ArrayList<>();
             for(Diary diary : diarys)
             {

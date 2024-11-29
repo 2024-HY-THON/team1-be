@@ -33,7 +33,7 @@ public class DiaryController {
 
     @GetMapping("/emotions/{year}/{month}")
     public ResponseEntity<?> emotions(Principal principal, @PathVariable("year") Long year, @PathVariable("month") Long month) {
-        List<DailyEmotion> emotions = diaryService.getEmotions(principal.getName());
+        List<DailyEmotion> emotions = diaryService.getEmotionsByYearMonth(principal.getName(), year, month);
 
         if (emotions == null) {
             // emotions가 null => user 없음
@@ -43,4 +43,11 @@ public class DiaryController {
             return ResponseEntity.ok(emotions);
         }
     }
+
+//    @GetMapping("/mmm") //createdDate제거하고 해야할듯
+//    public ResponseEntity<?> tmmm(Principal principal)
+//    {
+//        diaryService.makeTestDiary(principal.getName());
+//        return ResponseEntity.status(HttpStatus.OK).body("Test diary made");
+//    }
 }
