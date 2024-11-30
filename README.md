@@ -246,3 +246,7 @@ Patch/updateAddress
   "message": "Failed to update address"
 }
 ```
+
+
+### 테스트 일기생성(2024/11/1~28까지 28개 생성)
+GET /test
