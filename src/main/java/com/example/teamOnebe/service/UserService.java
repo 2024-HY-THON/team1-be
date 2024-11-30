@@ -1,10 +1,12 @@
 package com.example.teamOnebe.service;
 
 import com.example.teamOnebe.dto.UserDetailsDto;
+import com.example.teamOnebe.entity.Music;
 import com.example.teamOnebe.entity.Tree;
 import com.example.teamOnebe.entity.User;
 import com.example.teamOnebe.dto.UserRegisterDto;
 import com.example.teamOnebe.entity.Wear;
+import com.example.teamOnebe.repository.MusicRepository;
 import com.example.teamOnebe.repository.TreeRepository;
 import com.example.teamOnebe.repository.UserRepository;
 import com.example.teamOnebe.repository.WearRepository;
@@ -22,6 +24,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final TreeRepository treeRepository;
     private final WearRepository wearRepository;
+    private final MusicRepository musicRepository;
     private final PasswordEncoder passwordEncoder;
 
 
@@ -51,6 +54,14 @@ public class UserService {
                 .num(0)
                 .build();
         wearRepository.save(wear);
+
+        Music music = Music.builder()
+                .title("Brisa Do Mar")
+                .artist("CTRL S")
+                .music_id(1)
+                .user(user)
+                .build();
+        musicRepository.save(music);
         return true;
     }
 

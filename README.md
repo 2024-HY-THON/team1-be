@@ -78,7 +78,7 @@ application/json
 
 
 
-### 현재 정보(나무레벨/아이템id/이름/경험치)
+### 현재 정보(나무레벨/아이템id/이름/경험치/음악정보)
 GET /tree/info
 
 응답예시
@@ -87,7 +87,11 @@ GET /tree/info
     "level": 1,    //나무레벨 (1~4)
     "wear": 0,     //아이템id (기본0)
     "name": "범",  //이름
-    "exp": 0      //경험치 (나무에 작성한일기수)
+    "exp": 0,      //경험치 (나무에 작성한일기수)
+    
+    "title":"노래제목",
+    "artist":"가수이름",
+    "music_id": 1~6
 }
 ```
 
@@ -175,7 +179,7 @@ GET /wear/{num}
 ex. /wear/3   => 3번장착
 
 
-### 이름변경
+### 이름및주소정보
 GET/user/details
 
 응답예시
@@ -190,6 +194,14 @@ GET/user/details
 ```
 {
   "message": "user not found"
+}
+```
+
+##이름변경  
+PATCH /updateName  
+```
+{
+"newName":"새이름"
 }
 ```
 
@@ -250,3 +262,17 @@ Patch/updateAddress
 
 ### 테스트 일기생성(2024/11/1~28까지 28개 생성)
 GET /test
+
+
+### 음악 설정
+POST /music/set
+```
+{
+    "title":"노래제목",
+    "artist":"가수이름",
+    "music_id": 2
+}
+```
+
+
+
