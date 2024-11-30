@@ -198,7 +198,7 @@ GET/user/details
 ```
 
 ##이름변경  
-PATCH /updateName  
+PATCH /mypage/updateName  
 ```
 {
 "newName":"새이름"
@@ -206,7 +206,7 @@ PATCH /updateName
 ```
 
 ### 비밀번호 변경
-Patch/updatePassword
+Patch/mypage/updatePassword
 로그인된 사용자만 접근 가능
 
 요청 본문 예시
@@ -233,7 +233,7 @@ Patch/updatePassword
 ```
 
 ### 주소설정
-Patch/updateAddress
+Patch /mypage/updateAddress
 로그인된 사용자만 접근 가능
 
 요청 본문 예시
