@@ -29,7 +29,7 @@ public class Diary {
     private User user;
 
     @CreationTimestamp
-    @Column(nullable = false, updatable = false)
+    @Column(nullable = false)
     private LocalDate createdDate;
 
     @Column(nullable = false)
@@ -39,4 +39,9 @@ public class Diary {
     private String type; //happy worry
 
     private String content;
+
+    public void testSetCreatedDate(LocalDate localDate)
+    {
+        this.createdDate = localDate;
+    }
 }

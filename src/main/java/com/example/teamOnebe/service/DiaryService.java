@@ -30,22 +30,22 @@ public class DiaryService {
     private final UserRepository userRepository;
     private final TreeRepository treeRepository;
 
-//    public boolean makeTestDiary(String username)
-//    {
-//        User user = userRepository.findByUsername(username).get();
-//        Tree tree = treeRepository.findByUserAndActiveIsTrue(user).get();
-//
-//        // Diary 데이터 생성
-//        List<Diary> diaries = Arrays.asList(
-//                Diary.builder().user(user).tree(tree).createdDate(LocalDate.of(2024, 10, 1)).emotion("good").type("happy").content("Test content 1").build(),
-//                Diary.builder().user(user).tree(tree).createdDate(LocalDate.of(2024, 10, 2)).emotion("soso").type("worry").content("Test content 2").build(),
-//                Diary.builder().user(user).tree(tree).createdDate(LocalDate.of(2024, 11, 3)).emotion("bad").type("sad").content("Test content 3").build()
-//        );
-//
-//        // 데이터베이스에 저장
-//        diaryRepository.saveAll(diaries);
-//        return true;
-//    }
+    public boolean makeTestDiary(String username)
+    {
+        String[] emotions = {"good","soso","bad"};
+        User user = userRepository.findByUsername(username).get();
+        Tree tree = treeRepository.findByUserAndActiveIsTrue(user).get();
+        // Diary 데이터 생성
+        for(int i=1;i<=28;i++)
+        {
+            int randomValue = (int) (Math.random() * 3); // 0 ~ 2
+            Diary diary = Diary.builder().user(user).tree(tree).emotion(emotions[randomValue]).type("happy").content("Test content" + i).build();
+            diaryRepository.save(diary);
+            diary.testSetCreatedDate(LocalDate.of(2024,11,i));
+            diaryRepository.save(diary);
+        }
+        return true;
+    }
 
 
 

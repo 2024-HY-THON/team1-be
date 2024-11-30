@@ -67,10 +67,10 @@ public class DiaryController {
         }
     }
 
-//    @GetMapping("/mmm") //createdDate제거하고 해야할듯
-//    public ResponseEntity<?> tmmm(Principal principal)
-//    {
-//        diaryService.makeTestDiary(principal.getName());
-//        return ResponseEntity.status(HttpStatus.OK).body("Test diary made");
-//    }
+    @GetMapping("/test")
+    public ResponseEntity<?> tmmm(Principal principal)
+    {
+        diaryService.makeTestDiary(principal.getName());
+        return ResponseEntity.status(HttpStatus.OK).body("Test diary made");
+    }
 }
