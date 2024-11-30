@@ -5,6 +5,7 @@ import com.example.teamOnebe.entity.User;
 import com.example.teamOnebe.repository.UserRepository;
 import com.example.teamOnebe.service.EmailService;
 import com.example.teamOnebe.service.UserService;
+import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -71,7 +72,7 @@ public class UserController {
     }
 
     @PostMapping("/mail/send")
-    public ResponseEntity<String> sendVerification(@RequestBody EmailDto emailDto)
+    public ResponseEntity<String> sendVerification(@RequestBody EmailDto emailDto) throws MessagingException
     {
         if(emailDto == null || emailDto.getEmail() == null)
         {
